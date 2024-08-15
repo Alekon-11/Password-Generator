@@ -5,7 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="./style.css">
         <title>Password Generator</title>
     </head>
@@ -24,9 +25,16 @@
                 <div class="generator">
                     <h2 class="generator__title">Create a new password</h2>
                     <div class="input-box">
-                        <input type="text" disabled value="dfjD#8*#$%@fjfl#">
-                        <span class="copy-password">copy_all</span>
-                        <div class="pass-progress-line"></div>
+                        <input type="text" disabled value="dfjD#8*#$%@fjfl#dfjD#8*#$%@fjfl#">
+                        <span class="material-symbols-outlined" tabindex="0">copy_all</span>
+                        <!-- <div class="pass-progress-line"></div> -->
+                    </div>
+                    <div class="range-line">
+                        <div class="block-title">Password Length</div>
+                        <div class="range-line__wrapper">
+                            <input class="range__input" type="range" min="0" max="36" step="1" value="8">
+                            <span class="range__value">10</span>
+                        </div>
                     </div>
                     <div class="switchers">
                         <div class="block-title">Password Settings</div>
@@ -53,12 +61,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="length-line">
-                        <div class="block-title">Password Length</div>
-                        <div class="length-line__wrapper">
-                            <input class="range" type="range" min="5" max="36" step="1" value="10">
-                        </div>
-                    </div>
+                    
                     <button type="button" class="create-btn">Create password</button>
                 </div>
             </main>
