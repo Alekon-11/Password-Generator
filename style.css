@@ -200,6 +200,8 @@ body{
 
 .input-box input:disabled{
     background-color: var(--d-color);
+    box-shadow: 0px 0px 5px 1px var(--b-color);
+    color: inherit;
 }
 
 .material-symbols-outlined{
@@ -272,7 +274,8 @@ body{
     align-items: center;
 }
 
-.check__input{
+.check__input,
+.check__input:disabled{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
