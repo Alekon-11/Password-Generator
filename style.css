@@ -279,6 +279,7 @@ body{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    background-color: transparent;
 }
 
 .check__box{
