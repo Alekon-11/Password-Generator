@@ -1,36 +1,108 @@
 'use strict';
 
-const rangeInput = document.querySelector('.range__input');
-const rangeValueBlock = document.querySelector('.range__value');
+const dataPG = {
+    lowercase: 'abcdefghijklmnopqrstuvwxyz',
+    uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    numbers: '0123456789',
+    symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?/~'
+};
 
-function chasgeRangeValue(parent, valueContentBlock) {
-    let clientWidth = parent.clientWidth - 30;
-    let leftValue = +parent.value * (clientWidth / +parent.max);
+const rangeLineInput = document.querySelector('.range-line__input');
+const rangeLineValue = document.querySelector('.range-line__value');
+const progressLine = document.querySelector('.pass-progress-line');
+const passwordInput = document.querySelector('.input-box input');
+const generateBtn = document.querySelector('.create-btn');
+const checkInputItems = document.querySelectorAll('.check__input');
+const copyBtn = document.querySelector('.material-symbols-outlined');
+const shuffleString = str => str.split('').sort(() => Math.random() - 0.5).join('');
+const randomInteger = (min, max) => (Math.random() * (max - min) + min).toFixed();
 
-    valueContentBlock.textContent = parent.value;
-    valueContentBlock.style.left = `${leftValue}px`;
+function copyPassword(e) {
+    navigator.clipboard.writeText(passwordInput.value)
+    e.target.textContent = 'check';
+    setTimeout(() => e.target.textContent = 'copy_all', 1000);
 }
 
-rangeInput.addEventListener('input', e => chasgeRangeValue(e.target, rangeValueBlock));
+function savePasswordOptions() {
+    const passOptions = {};
+    passOptions['length'] = rangeLineInput.value;
+    checkInputItems.forEach(item => {
+        passOptions[item.name] = item.checked; 
+    });
+    localStorage.setItem('passOptions',JSON.stringify(passOptions));
+}
 
-chasgeRangeValue(rangeInput, rangeValueBlock);
+function restorePasswordOptiions() {
+    if(localStorage.getItem('passOptions')){
+        const passOptions = JSON.parse(localStorage.getItem('passOptions'));
+        const {length ,lowercase, uppercase, numbers, symbols} = passOptions;
+        rangeLineInput.value = length;
+        
+        checkInputItems.forEach(item => {
+            if(item.name === 'lowercase') item.checked = lowercase;
+            if(item.name === 'uppercase') item.checked = uppercase;
+            if(item.name === 'numbers') item.checked = numbers;
+            if(item.name === 'symbols') item.checked = symbols;
+        });
 
-// const headerTitle = document.querySelector('.header__title');
+    }
+}
 
-// function typeTextAnimation(parent) {
-//     let textArr = [...parent.textContent];
-//     let n = 0;
-//     parent.textContent = '';
+function generatePassword(length) {
 
-//     console.log(textArr);
+    let line = '';
 
-//     const interval = setInterval(function(){
-//         parent.textContent += textArr[n++];
-//         if(n >= textArr.length){
-//             clearInterval(interval);
-//         }
-//     }, 150);
-   
-// }
+    checkInputItems.forEach(item => {
+        for(let key in dataPG){
+            if(item.checked && item.name === key){
+                line += dataPG[key];
+            }
+        }
+    });
 
-// typeTextAnimation(headerTitle);
+    let randomPassword = '';
+
+    for(let i = 0; i < length; i++){
+        let shuffledLine = shuffleString(line);
+        let random = randomInteger(0, shuffledLine.length - 1 );
+        randomPassword += shuffledLine[random];
+    }
+
+    if(length){
+        passwordInput.value = randomPassword;
+    } else {
+        passwordInput.value = 0;
+    }
+}
+
+function updateProgressLinePosition(value) {
+    progressLine.classList.remove('weak', 'medium', 'strong');
+
+    if (value > 0 && value < 10) {
+        progressLine.classList.add('weak');
+    } else if (value >= 10 && value <= 16) {
+        progressLine.classList.add('medium');
+    } else if (value > 16) {
+        progressLine.classList.add('strong');
+    }
+}
+
+function changeRangeLineValue(rangeLine, valueContent) {
+    let rangeLineWidth = +rangeLine.clientWidth - 25;
+    let leftValue = +rangeLine.value * (rangeLineWidth / +rangeLine.max);
+
+    valueContent.textContent = rangeLine.value;
+    valueContent.style.left = `${leftValue}px`;
+
+    updateProgressLinePosition(+rangeLine.value);
+    generatePassword(+rangeLine.value);
+    savePasswordOptions();
+}
+
+restorePasswordOptiions(rangeLineInput);
+
+rangeLineInput.addEventListener('input', e => changeRangeLineValue(e.target, rangeLineValue));
+generateBtn.addEventListener('click', () => changeRangeLineValue(rangeLineInput, rangeLineValue));
+copyBtn.addEventListener('click', e => copyPassword(e));
+
+changeRangeLineValue(rangeLineInput, rangeLineValue);

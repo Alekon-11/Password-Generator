@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,6 +18,7 @@
                 <div class="container">
                     <div class="header__wrapper">
                         <h1 class="header__title"><a href="/">Password Generator</a> </h1>
+                        <span>by <a href="https://t.me/lo_onlife" target="_blank">@lo_onl</a></span>
                     </div>
                 </div>
             </header>
@@ -27,20 +29,22 @@
                     <div class="input-box">
                         <input type="text" disabled value="dfjD#8*#$%@fjfl#dfjD#8*#$%@fjfl#">
                         <span class="material-symbols-outlined" tabindex="0">copy_all</span>
-                        <!-- <div class="pass-progress-line"></div> -->
+                        <div class="pass-progress-line"></div>
                     </div>
                     <div class="range-line">
-                        <div class="block-title">Password Length</div>
+                        <label for="range">
+                            <div class="block-title">Password Length</div>
+                        </label>
                         <div class="range-line__wrapper">
-                            <input class="range__input" type="range" min="0" max="36" step="1" value="8">
-                            <span class="range__value">10</span>
+                            <input class="range-line__input" id="range" type="range" min="0" max="36" step="2" value="8">
+                            <span class="range-line__value">10</span>
                         </div>
                     </div>
                     <div class="switchers">
                         <div class="block-title">Password Settings</div>
                         <div class="switchers__wrapper">
                             <label class="check">
-                                <input type="checkbox" class="check__input" name="lowercase">
+                                <input type="checkbox" class="check__input" name="lowercase" disabled checked readonly>
                                 <span class="check__box"></span>
                                 lowercase (a-z)
                             </label>
